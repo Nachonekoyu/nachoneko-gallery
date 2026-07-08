@@ -1,0 +1,10 @@
+{
+  "build": {
+    "command": "",
+    "publish": ".",
+    "functions": ""
+  },
+  "dev": {
+    "command": ""
+  }
+}

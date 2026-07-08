@@ -2,9 +2,6 @@
   "build": {
     "command": "",
     "publish": ".",
-    "functions": ""
-  },
-  "dev": {
-    "command": ""
+    "functions": "./functions"
   }
 }

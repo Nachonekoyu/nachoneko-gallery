@@ -29,7 +29,7 @@ def generate_main_gallery():
     for key in categories:
         cat = categories[key]
         cat["files"] = get_image_files(cat["path"])
-        cat["url"] = f"{GITHUB_RAW_URL}/{cat['path']}"
+        cat["url"] = cat["path"]
         print(f"{key}: {len(cat['files'])} files")
     
     content = f'''<!DOCTYPE html>
@@ -610,7 +610,7 @@ def generate_emote_gallery():
     for key in categories:
         cat = categories[key]
         cat["files"] = get_image_files(cat["path"])
-        cat["url"] = f"{GITHUB_RAW_URL}/{cat['path']}"
+        cat["url"] = cat["path"]
         print(f"{key}: {len(cat['files'])} files")
     
     content = f'''<!DOCTYPE html>

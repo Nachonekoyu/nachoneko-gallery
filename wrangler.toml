@@ -1,0 +1,7 @@
+name = "nachoneko-gallery"
+type = "static"
+account_id = ""
+workers_dev = true
+route = ""
+zone_id = ""
+build = { command = "", publish = "." }

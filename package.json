@@ -1,0 +1,8 @@
+{
+  "name": "nachoneko-gallery",
+  "version": "1.0.0",
+  "description": "Gallery website for Amashiro Natsuki's artworks",
+  "scripts": {
+    "build": "echo 'No build required'"
+  }
+}

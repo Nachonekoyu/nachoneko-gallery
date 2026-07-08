@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>甘城なつき - 猫歌视频</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #A78BFA;
+            --secondary-color: #F9A8D4;
+            --accent-color: #67E8F9;
+            --bg-dark: #FDF4FF;
+            --bg-card: #FCE7F3;
+            --text-primary: #4C1D95;
+            --text-secondary: #7C3AED;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #F3E8FF 50%, #ECFEFF 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(167, 139, 250, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        h1 {
+            font-size: 2rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.15) 0%, rgba(249, 168, 212, 0.15) 100%);
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(167, 139, 250, 0.3);
+        }
+
+        .hero-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-section p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .video-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .video-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(167, 139, 250, 0.3);
+        }
+
+        .video-item video {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .video-item .video-info {
+            padding: 1rem;
+        }
+
+        .video-item .video-info h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .video-item .video-info p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            width: 100%;
+        }
+
+        .lightbox-content video {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(167, 139, 250, 0.3);
+            margin-top: 3rem;
+        }
+
+        .footer p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>甘城なつき</h1>
+            <nav class="nav-links">
+                <a href="index.html">首页</a>
+                <a href="characters.html">角色介绍</a>
+                <a href="main-gallery.html">主图画廊</a>
+                <a href="emote-gallery.html">表情画廊</a>
+                <a href="video-gallery.html" class="active">猫歌视频</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <h2>猫歌视频</h2>
+            <p>欣赏甘城なつき的猫歌视频作品，包括各种翻唱和原创歌曲视频。</p>
+        </section>
+
+        <section>
+            <div class="video-grid" id="video-grid">
+                <div class="video-item" onclick="openLightbox('images/video/NachoNeko%20Cat%20Loving.mp4')">
+                    <video src="images/video/NachoNeko%20Cat%20Loving.mp4" controls poster="images/video/NachoNeko%20Cat%20Loving.mp4" preload="metadata"></video>
+                    <div class="video-info">
+                        <h4>NachoNeko Cat Loving.mp4</h4>
+                        <p>点击播放视频</p>
+                    </div>
+                </div><div class="video-item" onclick="openLightbox('images/video/nekomeshi%20_%20Nachoneko%20%28cover%29%281080P_HD%29.mp4')">
+                    <video src="images/video/nekomeshi%20_%20Nachoneko%20%28cover%29%281080P_HD%29.mp4" controls poster="images/video/nekomeshi%20_%20Nachoneko%20%28cover%29%281080P_HD%29.mp4" preload="metadata"></video>
+                    <div class="video-info">
+                        <h4>nekomeshi _ Nachoneko (cover)(1080P_HD).mp4</h4>
+                        <p>点击播放视频</p>
+                    </div>
+                </div><div class="video-item" onclick="openLightbox('images/video/%E3%81%A6%E3%81%AD%E3%81%A6%E3%81%AD%20_%20Nachoneko%20%28cover%29%281080P_HD%29.mp4')">
+                    <video src="images/video/%E3%81%A6%E3%81%AD%E3%81%A6%E3%81%AD%20_%20Nachoneko%20%28cover%29%281080P_HD%29.mp4" controls poster="images/video/%E3%81%A6%E3%81%AD%E3%81%A6%E3%81%AD%20_%20Nachoneko%20%28cover%29%281080P_HD%29.mp4" preload="metadata"></video>
+                    <div class="video-info">
+                        <h4>てねてね _ Nachoneko (cover)(1080P_HD).mp4</h4>
+                        <p>点击播放视频</p>
+                    </div>
+                </div><div class="video-item" onclick="openLightbox('images/video/%E5%A4%9C%E3%82%88%E3%81%84%E3%81%A1%20%C3%97%20Nachoneko%20%28Cover%29.mp4')">
+                    <video src="images/video/%E5%A4%9C%E3%82%88%E3%81%84%E3%81%A1%20%C3%97%20Nachoneko%20%28Cover%29.mp4" controls poster="images/video/%E5%A4%9C%E3%82%88%E3%81%84%E3%81%A1%20%C3%97%20Nachoneko%20%28Cover%29.mp4" preload="metadata"></video>
+                    <div class="video-info">
+                        <h4>夜よいち × Nachoneko (Cover).mp4</h4>
+                        <p>点击播放视频</p>
+                    </div>
+                </div><div class="video-item" onclick="openLightbox('images/video/%E6%81%8B%E3%82%B4%E3%82%B3%E3%83%AD%20%28K_s%20Remix%29%20_%20Nachoneko%20%C3%97%20%E8%B5%A4%E8%A6%8B%E3%81%8B%E3%82%8B%E3%81%B3%20%28cover%29%281080.mp4')">
+                    <video src="images/video/%E6%81%8B%E3%82%B4%E3%82%B3%E3%83%AD%20%28K_s%20Remix%29%20_%20Nachoneko%20%C3%97%20%E8%B5%A4%E8%A6%8B%E3%81%8B%E3%82%8B%E3%81%B3%20%28cover%29%281080.mp4" controls poster="images/video/%E6%81%8B%E3%82%B4%E3%82%B3%E3%83%AD%20%28K_s%20Remix%29%20_%20Nachoneko%20%C3%97%20%E8%B5%A4%E8%A6%8B%E3%81%8B%E3%82%8B%E3%81%B3%20%28cover%29%281080.mp4" preload="metadata"></video>
+                    <div class="video-info">
+                        <h4>恋ゴコロ (K_s Remix) _ Nachoneko × 赤見かるび (cover)(1080.mp4</h4>
+                        <p>点击播放视频</p>
+                    </div>
+                </div><div class="video-item" onclick="openLightbox('images/video/%E7%94%98%E5%9F%8E%E7%8C%AB%E7%8C%AB%E5%92%8C%E7%94%9C%E7%94%9C%E5%9C%88%E9%85%B1%E4%B9%9F%E6%83%B3%E6%88%90%E4%B8%BA%E5%A4%A7%E7%BB%9F%E9%A2%86.mp4')">
+                    <video src="images/video/%E7%94%98%E5%9F%8E%E7%8C%AB%E7%8C%AB%E5%92%8C%E7%94%9C%E7%94%9C%E5%9C%88%E9%85%B1%E4%B9%9F%E6%83%B3%E6%88%90%E4%B8%BA%E5%A4%A7%E7%BB%9F%E9%A2%86.mp4" controls poster="images/video/%E7%94%98%E5%9F%8E%E7%8C%AB%E7%8C%AB%E5%92%8C%E7%94%9C%E7%94%9C%E5%9C%88%E9%85%B1%E4%B9%9F%E6%83%B3%E6%88%90%E4%B8%BA%E5%A4%A7%E7%BB%9F%E9%A2%86.mp4" preload="metadata"></video>
+                    <div class="video-info">
+                        <h4>甘城猫猫和甜甜圈酱也想成为大统领.mp4</h4>
+                        <p>点击播放视频</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightbox-close">×</button>
+        <div class="lightbox-content" id="lightbox-content">
+            <video controls></video>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 甘城なつき插画作品展示 | 仅供欣赏</p>
+    </footer>
+
+    <script>
+        function openLightbox(url) {
+            const lightbox = document.getElementById('lightbox');
+            const content = document.getElementById('lightbox-content');
+            const video = content.querySelector('video');
+            video.src = url;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            video.play();
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            const content = document.getElementById('lightbox-content');
+            const video = content.querySelector('video');
+            video.pause();
+            video.src = '';
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>

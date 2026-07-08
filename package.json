@@ -1,8 +1,0 @@
-{
-  "name": "nachoneko-gallery",
-  "version": "1.0.0",
-  "description": "甘城なつき插画作品展示",
-  "scripts": {
-    "build": "node build.js"
-  }
-}

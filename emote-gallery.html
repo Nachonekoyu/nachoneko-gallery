@@ -406,7 +406,7 @@
                 const urls = [];
                 
                 pageFiles.forEach(file => {
-                    const fullPath = config.path + '/' + file;
+                    const fullPath = config.path + '/' + encodeURI(file);
                     urls.push(fullPath);
                 });
                 

@@ -742,7 +742,7 @@
             const character = characterDetails[characterId];
             if (!character) return;
 
-            document.getElementById('character-detail-img').src = character.image;
+            document.getElementById('character-detail-img').src = encodeURI(character.image);
             document.getElementById('character-detail-title').textContent = character.name;
             document.getElementById('character-detail-subtitle').textContent = character.japanese;
             document.getElementById('character-detail-bio').textContent = character.bio;
@@ -797,6 +797,18 @@
         }
 
         document.getElementById('character-modal-close').addEventListener('click', closeCharacterModal);
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                if (img.src) {
+                    const url = new URL(img.src);
+                    url.pathname = encodeURI(url.pathname);
+                    img.src = url.toString();
+                }
+            });
+        });
+        
         initCharacterCards();
     </script>
 </body>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>甘城なつき - 插画作品展示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #A78BFA;
+            --secondary-color: #F9A8D4;
+            --accent-color: #67E8F9;
+            --bg-dark: #FDF4FF;
+            --bg-card: #FCE7F3;
+            --text-primary: #4C1D95;
+            --text-secondary: #7C3AED;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #F3E8FF 50%, #ECFEFF 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(167, 139, 250, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        h1 {
+            font-size: 2rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.15) 0%, rgba(249, 168, 212, 0.15) 100%);
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(167, 139, 250, 0.3);
+        }
+
+        .hero-section h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .about-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(167, 139, 250, 0.3);
+        }
+
+        .about-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .about-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .quick-link-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .quick-link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(167, 139, 250, 0.3);
+        }
+
+        .quick-link-card a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .quick-link-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .quick-link-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .quick-link-card p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(167, 139, 250, 0.3);
+            margin-top: 3rem;
+        }
+
+        .footer p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>甘城なつき</h1>
+            <nav class="nav-links">
+                <a href="index.html" class="active">首页</a>
+                <a href="characters.html">角色介绍</a>
+                <a href="main-gallery.html">主图画廊</a>
+                <a href="emote-gallery.html">表情画廊</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <h2>甘城なつき - 插画作品展示</h2>
+            <p>欢迎来到甘城なつき的插画世界！这里展示了这位日本插画师的精彩作品，包括她创作的虚拟主播同人画、原创角色插画以及各种可爱的表情包。</p>
+        </section>
+
+        <section class="about-section">
+            <h3>关于甘城なつき</h3>
+            <p>甘城なつき（Amagi Natsuki）是一位日本插画师，以其可爱的画风和对虚拟主播文化的热爱而闻名。她的作品以猫娘、鲨鱼娘等可爱角色为主，色彩鲜艳，线条流畅，深受粉丝喜爱。</p>
+            <p>甘城なつき活跃于社交媒体平台，经常分享自己的插画作品和创作过程。她不仅创作原创角色，还为许多虚拟主播绘制同人插画，其中最著名的作品包括Hololive English成员Gawr Gura的同人图。</p>
+            <p>除了插画创作，甘城なつき还设计了许多表情包，这些表情包在社交媒体上广泛传播，成为虚拟主播文化的一部分。她的作品风格多样，从可爱的Q版到精美的写实风格都有涉及。</p>
+        </section>
+
+        <section>
+            <h3 style="font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--primary-color);">快速导航</h3>
+            <div class="quick-links">
+                <div class="quick-link-card">
+                    <a href="characters.html">
+                        <div class="icon">🎭</div>
+                        <h4>角色介绍</h4>
+                        <p>了解甘城なつき笔下的可爱角色</p>
+                    </a>
+                </div>
+                <div class="quick-link-card">
+                    <a href="main-gallery.html">
+                        <div class="icon">🖼️</div>
+                        <h4>主图画廊</h4>
+                        <p>欣赏精美的主图插画作品</p>
+                    </a>
+                </div>
+                <div class="quick-link-card">
+                    <a href="emote-gallery.html">
+                        <div class="icon">😊</div>
+                        <h4>表情画廊</h4>
+                        <p>查看丰富的表情包合集</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 甘城なつき插画作品展示 | 仅供欣赏</p>
+    </footer>
+</body>
+</html>

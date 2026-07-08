@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>甘城なつき - 角色介绍</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #A78BFA;
+            --secondary-color: #F9A8D4;
+            --accent-color: #67E8F9;
+            --bg-dark: #FDF4FF;
+            --bg-card: #FCE7F3;
+            --text-primary: #4C1D95;
+            --text-secondary: #7C3AED;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #F3E8FF 50%, #ECFEFF 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(167, 139, 250, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        h1 {
+            font-size: 2rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.15) 0%, rgba(249, 168, 212, 0.15) 100%);
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(167, 139, 250, 0.3);
+        }
+
+        .hero-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-section p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .character-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .character-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(167, 139, 250, 0.3);
+        }
+
+        .character-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .character-card .card-content {
+            padding: 1.5rem;
+        }
+
+        .character-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .character-card p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .character-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(253, 244, 255, 0.98);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .character-modal.active {
+            display: block;
+        }
+
+        .character-modal-close {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(167, 139, 250, 0.2);
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            z-index: 2001;
+        }
+
+        .character-modal-close:hover {
+            background: rgba(167, 139, 250, 0.4);
+        }
+
+        .character-detail {
+            max-width: 900px;
+            margin: 0 auto;
+            padding-top: 4rem;
+        }
+
+        .character-detail-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .character-detail-img {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 4px solid var(--primary-color);
+            box-shadow: 0 10px 40px rgba(167, 139, 250, 0.3);
+            margin-bottom: 1.5rem;
+        }
+
+        .character-detail-title {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .character-detail-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .character-detail-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(167, 139, 250, 0.3);
+        }
+
+        .character-detail-section h4 {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .character-detail-section p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 0.8rem;
+        }
+
+        .character-detail-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .character-detail-section li {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .character-detail-section li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+        }
+
+        .character-gallery-link {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .character-gallery-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(167, 139, 250, 0.4);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(167, 139, 250, 0.3);
+            margin-top: 3rem;
+        }
+
+        .footer p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>甘城なつき</h1>
+            <nav class="nav-links">
+                <a href="index.html">首页</a>
+                <a href="characters.html" class="active">角色介绍</a>
+                <a href="main-gallery.html">主图画廊</a>
+                <a href="emote-gallery.html">表情画廊</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <h2>角色介绍</h2>
+            <p>甘城なつき创作了许多可爱的角色，包括原创角色和虚拟主播同人角色。点击角色卡片查看详细介绍。</p>
+        </section>
+
+        <section>
+            <div class="characters-grid">
+                <div class="character-card" data-character="gura">
+                    <img src="file:///F:/猫图/相关表情/gura/gura04.jpg" alt="Gawr Gura">
+                    <div class="card-content">
+                        <h4>Gawr Gura（がうる・がうら）</h4>
+                        <p><strong>身份：</strong>Hololive English 一期生成员，虚拟鲨鱼娘。</p>
+                        <p><strong>设计：</strong>蓝白色鲨鱼主题，标志性的鲨鱼牙和蓝色短发。</p>
+                        <p style="color: #A78BFA; font-size: 0.9rem; margin-top: 0.5rem;">点击查看详细介绍 →</p>
+                    </div>
+                </div>
+                <div class="character-card" data-character="nachoneko">
+                    <img src="file:///F:/猫图/相关表情/nachoneko/nachoneko-001.jpg" alt="Nachoneko">
+                    <div class="card-content">
+                        <h4>Nachoneko（なちょねこ）</h4>
+                        <p><strong>身份：</strong>甘城なつき的原创看板娘角色，猫耳少女。</p>
+                        <p><strong>设计：</strong>粉色猫耳和长发，经常穿着可爱的连衣裙。</p>
+                        <p style="color: #A78BFA; font-size: 0.9rem; margin-top: 0.5rem;">点击查看详细介绍 →</p>
+                    </div>
+                </div>
+                <div class="character-card" data-character="kana">
+                    <img src="file:///F:/猫图/相关表情/kana/kana01.PNG" alt="Kana">
+                    <div class="card-content">
+                        <h4>Kana（かな）</h4>
+                        <p><strong>身份：</strong>甘城なつき创作的原创角色，活泼的少女形象。</p>
+                        <p><strong>设计：</strong>紫色短发搭配独特的刘海造型，蓝色眼睛。</p>
+                        <p style="color: #A78BFA; font-size: 0.9rem; margin-top: 0.5rem;">点击查看详细介绍 →</p>
+                    </div>
+                </div>
+                <div class="character-card" data-character="riru">
+                    <img src="file:///F:/猫图/相关表情/りる/りる01.png" alt="Riru">
+                    <div class="card-content">
+                        <h4>Riru（りる）</h4>
+                        <p><strong>身份：</strong>甘城なつき设计的原创角色，神秘的少女形象。</p>
+                        <p><strong>设计：</strong>黑色长发搭配红色蝴蝶结，哥特风格服装。</p>
+                        <p style="color: #A78BFA; font-size: 0.9rem; margin-top: 0.5rem;">点击查看详细介绍 →</p>
+                    </div>
+                </div>
+                <div class="character-card" data-character="sui">
+                    <img src="file:///F:/猫图/相关表情/スイ（sui）/スイ01.png" alt="Sui">
+                    <div class="card-content">
+                        <h4>Sui（スイ）</h4>
+                        <p><strong>身份：</strong>甘城なつき创作的原创角色，精灵般的少女形象。</p>
+                        <p><strong>设计：</strong>浅绿色短发搭配绿色眼睛，头上有叶子装饰。</p>
+                        <p style="color: #A78BFA; font-size: 0.9rem; margin-top: 0.5rem;">点击查看详细介绍 →</p>
+                    </div>
+                </div>
+                <div class="character-card" data-character="naname">
+                    <img src="file:///F:/猫图/相关表情/naname/naname1.jpg" alt="Naname">
+                    <div class="card-content">
+                        <h4>Naname（ななめ）</h4>
+                        <p><strong>身份：</strong>甘城なつき创作的原创角色，温柔的少女形象。</p>
+                        <p><strong>设计：</strong>长发造型，服装风格偏于日常和温柔。</p>
+                        <p style="color: #A78BFA; font-size: 0.9rem; margin-top: 0.5rem;">点击查看详细介绍 →</p>
+                    </div>
+                </div>
+                <div class="character-card" data-character="hazuki">
+                    <img src="file:///F:/猫图/相关表情/猫羽雫/猫羽雫001.jpg" alt="猫羽雫">
+                    <div class="card-content">
+                        <h4>猫羽雫（ねこはねしずく）</h4>
+                        <p><strong>身份：</strong>甘城なつき创作的原创角色，猫耳少女形象。</p>
+                        <p><strong>设计：</strong>白色猫耳和长发，蓝色眼睛，清新可爱的服装。</p>
+                        <p style="color: #A78BFA; font-size: 0.9rem; margin-top: 0.5rem;">点击查看详细介绍 →</p>
+                    </div>
+                </div>
+                <div class="character-card" data-character="komugi">
+                    <img src="file:///F:/猫图/相关表情/小粥/小粥01.jpeg" alt="小粥">
+                    <div class="card-content">
+                        <h4>小粥（こむぎ）</h4>
+                        <p><strong>身份：</strong>甘城なつき创作的原创角色，吃货少女形象。</p>
+                        <p><strong>设计：</strong>短发造型，表情生动有趣，常与食物相关场景出现。</p>
+                        <p style="color: #A78BFA; font-size: 0.9rem; margin-top: 0.5rem;">点击查看详细介绍 →</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 甘城なつき插画作品展示 | 仅供欣赏</p>
+    </footer>
+
+    <div class="character-modal" id="character-modal">
+        <button class="character-modal-close" id="character-modal-close">×</button>
+        <div class="character-detail" id="character-detail">
+            <div class="character-detail-header">
+                <img class="character-detail-img" id="character-detail-img" src="" alt="">
+                <h2 class="character-detail-title" id="character-detail-title"></h2>
+                <p class="character-detail-subtitle" id="character-detail-subtitle"></p>
+            </div>
+            <div class="character-detail-section">
+                <h4>角色简介</h4>
+                <p id="character-detail-bio"></p>
+            </div>
+            <div class="character-detail-section">
+                <h4>设计特点</h4>
+                <ul id="character-detail-design"></ul>
+            </div>
+            <div class="character-detail-section">
+                <h4>性格特征</h4>
+                <ul id="character-detail-personality"></ul>
+            </div>
+            <div class="character-detail-section">
+                <h4>角色趣闻</h4>
+                <ul id="character-detail-trivia"></ul>
+            </div>
+            <div class="character-detail-section" style="text-align: center;">
+                <a href="emote-gallery.html" class="character-gallery-link" id="character-gallery-link">查看相关表情画廊</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const characterDetails = {
+            "gura": {
+                "name": "Gawr Gura",
+                "japanese": "がうる・がうら",
+                "image": "file:///F:/猫图/相关表情/gura/gura04.jpg",
+                "bio": "Gawr Gura是Hololive English一期生（Myth）成员之一，以鲨鱼娘为设定的虚拟主播。她是甘城なつき早期绘制的虚拟主播同人角色之一，因其可爱的鲨鱼造型和活泼的个性深受粉丝喜爱。甘城なつき为Gura创作了大量的表情包和同人插画，使这个角色在虚拟主播圈外也广为人知。",
+                "design": [
+                    "蓝白色鲨鱼主题配色，身体大部分为白色，搭配蓝色渐变的鲨鱼尾",
+                    "标志性的鲨鱼牙齿和蓝色短发，头发上有鲨鱼鳍状的装饰",
+                    "水手服造型，蓝色领结和白色上衣，搭配黑色短裤",
+                    "眼睛为蓝色，带有鲨鱼般的锐利感但又不失可爱",
+                    "常戴着一顶写有\"SHARK\"字样的棒球帽"
+                ],
+                "personality": [
+                    "活泼可爱，充满元气，喜欢在直播中唱歌和玩游戏",
+                    "偶尔表现出天然呆的一面，说话时带有独特的鲨鱼口音",
+                    "虽然设定是\"饿\"了很久的鲨鱼，但实际上非常温柔体贴",
+                    "喜欢恶作剧，尤其是对其他Hololive成员",
+                    "唱歌时声音非常清澈，有\"鲨鱼歌姬\"的称号"
+                ],
+                "trivia": [
+                    "Gura的名字来源于日语\"がうる・がうら\"，意为\"咕噜咕噜\"，形容鲨鱼呼吸的声音",
+                    "她自称是\"最饿的鲨鱼\"，经常在直播中表现出对食物的渴望",
+                    "甘城なつき绘制的Gura表情包在社交媒体上广泛传播，成为虚拟主播表情包的代表之一",
+                    "Gura在Hololive English中是人气最高的成员之一，YouTube订阅数超过400万",
+                    "甘城なつき的Gura同人作品以Q版和可爱风格为主，深受粉丝喜爱"
+                ],
+                "galleryLink": "emote-gallery.html?character=gura"
+            },
+            "komugi": {
+                "name": "小粥",
+                "japanese": "こむぎ",
+                "image": "file:///F:/猫图/相关表情/小粥/小粥01.jpeg",
+                "bio": "小粥是甘城なつき原创的猫娘角色，以其可爱的造型和呆萌的表情著称。她是甘城なつき早期创作的角色之一，也是表情包系列中最受欢迎的角色之一。小粥的设定是一只喜欢喝牛奶、爱吃甜食的小猫，经常做出各种可爱的表情。",
+                "design": [
+                    "灰白色的猫耳和猫尾，耳朵内侧为粉色",
+                    "大大的眼睛，通常为蓝色或绿色",
+                    "可爱的圆脸和小小的鼻子",
+                    "经常穿着宽松的睡衣或家居服",
+                    "喜欢抱着枕头或毛绒玩具"
+                ],
+                "personality": [
+                    "天然呆，经常做出让人忍俊不禁的举动",
+                    "非常贪吃，尤其是喜欢甜食和牛奶",
+                    "有点懒散，喜欢睡觉和发呆",
+                    "虽然看起来呆萌，但实际上很聪明",
+                    "对主人非常忠诚和依赖"
+                ],
+                "trivia": [
+                    "小粥的名字来源于日语\"こむぎ\"，意为小麦，象征她像小麦一样温暖可爱",
+                    "甘城なつき为小粥创作了大量表情包，涵盖了各种日常场景",
+                    "小粥的表情以\"呆萌\"和\"可爱\"为主要特点，深受网友喜爱",
+                    "小粥的形象经常出现在甘城なつき的日常插画中",
+                    "小粥的周边商品包括贴纸、钥匙扣等，非常受欢迎"
+                ],
+                "galleryLink": "emote-gallery.html?character=komugi"
+            },
+            "kai": {
+                "name": "怪诶",
+                "japanese": "かい",
+                "image": "file:///F:/猫图/相关表情/怪诶/怪01.jpg",
+                "bio": "怪诶是甘城なつき创作的一个神秘角色，以其独特的设计风格和搞怪的表情而闻名。这个角色的设定非常自由，可以是任何形态，通常以Q版形象出现，做出各种奇怪的表情和动作。怪诶系列表情包以其幽默和夸张的风格在网络上广泛传播。",
+                "design": [
+                    "多变的外形，可以是猫、狐狸或其他动物形态",
+                    "通常为Q版大头形象",
+                    "表情非常丰富，从搞怪到呆萌应有尽有",
+                    "色彩鲜艳，经常使用对比强烈的配色",
+                    "身体比例夸张，头大身子小"
+                ],
+                "personality": [
+                    "搞怪幽默，喜欢做出各种夸张的表情",
+                    "非常调皮，经常捉弄其他角色",
+                    "性格开朗，总是充满活力",
+                    "有时候会表现出呆萌的一面",
+                    "喜欢模仿各种事物"
+                ],
+                "trivia": [
+                    "怪诶的名字来源于中文\"怪诶\"，意为\"奇怪啊\"，形容这个角色的奇特设定",
+                    "甘城なつき为怪诶创作的表情包以\"搞怪\"和\"魔性\"为主要特点",
+                    "怪诶系列表情包在社交媒体上非常流行，经常被用于表达各种情绪",
+                    "怪诶的形象经常被网友二次创作",
+                    "甘城なつき会根据热点事件创作新的怪诶表情"
+                ],
+                "galleryLink": "emote-gallery.html?character=kai"
+            },
+            "hazuki": {
+                "name": "猫羽雫",
+                "japanese": "ねこはねしずく",
+                "image": "file:///F:/猫图/相关表情/猫羽雫/猫羽雫001.jpg",
+                "bio": "猫羽雫是甘城なつき原创的猫娘角色，以其优雅的造型和可爱的表情著称。她是甘城なつき最受欢迎的原创角色之一，拥有大量的粉丝和周边商品。猫羽雫的设定是一只喜欢音乐和艺术的优雅小猫，经常出现在各种文艺场景中。",
+                "design": [
+                    "纯白色的猫耳和猫尾，耳朵上有粉色的蝴蝶结",
+                    "长长的白色头发，通常扎成双马尾",
+                    "大大的蓝色眼睛，带有温柔的眼神",
+                    "经常穿着洛丽塔风格的服装",
+                    "喜欢戴着各种可爱的头饰"
+                ],
+                "personality": [
+                    "优雅温柔，喜欢音乐和艺术",
+                    "有点害羞，不太擅长表达自己的感情",
+                    "非常善良，总是关心他人",
+                    "喜欢小动物，尤其是鸟类",
+                    "虽然看起来高冷，但实际上非常可爱"
+                ],
+                "trivia": [
+                    "猫羽雫的名字由\"猫羽\"（猫的羽毛）和\"雫\"（水滴）组成，寓意她像水滴一样纯洁",
+                    "甘城なつき为猫羽雫创作了大量的插画和表情包，涵盖了各种主题",
+                    "猫羽雫的形象经常被用于制作周边商品，如手办、抱枕等",
+                    "猫羽雫在社交媒体上拥有自己的粉丝社群",
+                    "甘城なつき会定期更新猫羽雫的新形象和新表情"
+                ],
+                "galleryLink": "emote-gallery.html?character=hazuki"
+            },
+            "mari": {
+                "name": "茉莉",
+                "japanese": "まり",
+                "image": "file:///F:/猫图/相关表情/茉莉/茉莉01.png",
+                "bio": "茉莉是甘城なつき创作的一个可爱的猫娘角色，以其清新的形象和活泼的性格受到喜爱。茉莉的设定是一只喜欢大自然和花朵的小猫，经常出现在花园或森林的场景中。她的表情以清新可爱为主，非常适合用于日常聊天。",
+                "design": [
+                    "浅绿色的猫耳和猫尾，带有花朵装饰",
+                    "棕色的短发，带有绿色的挑染",
+                    "大大的绿色眼睛，充满生机",
+                    "经常穿着清新的连衣裙",
+                    "喜欢戴着花环或花朵头饰"
+                ],
+                "personality": [
+                    "活泼开朗，充满生机",
+                    "热爱大自然，喜欢花朵和植物",
+                    "非常友善，容易与人相处",
+                    "有点调皮，喜欢恶作剧",
+                    "唱歌很好听，喜欢在森林里唱歌"
+                ],
+                "trivia": [
+                    "茉莉的名字来源于茉莉花，象征她像茉莉花一样清新美丽",
+                    "甘城なつき为茉莉创作的表情包以\"清新\"和\"可爱\"为主要特点",
+                    "茉莉的形象经常出现在甘城なつき的日常插画中",
+                    "茉莉的配色以绿色和白色为主，给人一种清新自然的感觉",
+                    "甘城なつき会根据季节变化创作不同主题的茉莉插画"
+                ],
+                "galleryLink": "emote-gallery.html?character=mari"
+            },
+            "akami": {
+                "name": "赤见",
+                "japanese": "あかみ",
+                "image": "file:///F:/猫图/相关表情/赤见/赤见01.jpeg",
+                "bio": "赤见是甘城なつき创作的一个独特角色，以其红色的主题和神秘的气质而闻名。赤见的设定是一只拥有特殊能力的猫娘，经常出现在奇幻或神秘的场景中。她的表情以酷炫和神秘为主，非常适合用于表达强烈的情感。",
+                "design": [
+                    "红色的猫耳和猫尾，带有黑色的条纹",
+                    "黑色的长发，带有红色的挑染",
+                    "锐利的红色眼睛，带有神秘的光芒",
+                    "经常穿着哥特或朋克风格的服装",
+                    "喜欢戴着各种饰品，如项链、耳环等"
+                ],
+                "personality": [
+                    "神秘高冷，不太擅长表达感情",
+                    "非常强大，拥有特殊的能力",
+                    "内心善良，总是默默帮助他人",
+                    "有点傲娇，不善于表达关心",
+                    "喜欢独自行动，但关键时刻会挺身而出"
+                ],
+                "trivia": [
+                    "赤见的名字来源于日语\"あかみ\"，意为\"红色的眼睛\"",
+                    "甘城なつき为赤见创作的表情包以\"酷炫\"和\"神秘\"为主要特点",
+                    "赤见的形象经常出现在甘城なつき的奇幻主题插画中",
+                    "赤见的配色以红色和黑色为主，给人一种神秘的感觉",
+                    "赤见的周边商品以酷炫风格为主，深受男性粉丝喜爱"
+                ],
+                "galleryLink": "emote-gallery.html?character=akami"
+            },
+            "nachoneko": {
+                "name": "Nachoneko",
+                "japanese": "なちょねこ",
+                "image": "file:///F:/猫图/相关表情/nachoneko/nachoneko-001.jpg",
+                "bio": "Nachoneko是甘城なつき的原创角色，也是她个人形象的化身。这个角色以甘城なつき本人为原型，结合了猫娘元素，形成了独特的可爱形象。Nachoneko经常出现在甘城なつき的日常插画和表情包中，是她最具代表性的角色之一。",
+                "design": [
+                    "黑色的猫耳和猫尾，带有白色的尖端",
+                    "黑色的短发，带有白色的刘海",
+                    "大大的眼睛，通常为蓝色或紫色",
+                    "经常穿着休闲的服装，如T恤、牛仔裤等",
+                    "喜欢戴着眼镜，增加知性的感觉"
+                ],
+                "personality": [
+                    "活泼开朗，充满创意",
+                    "喜欢画画和创作，是一个艺术家",
+                    "有点天然呆，经常做出可爱的举动",
+                    "非常友善，喜欢与粉丝互动",
+                    "对猫有特殊的喜爱"
+                ],
+                "trivia": [
+                    "Nachoneko的名字由\"なちょ\"（nacho的日语发音）和\"ねこ\"（猫）组成",
+                    "甘城なつき经常以Nachoneko的形象在社交媒体上与粉丝互动",
+                    "Nachoneko的表情包以\"日常\"和\"可爱\"为主要特点",
+                    "Nachoneko的形象经常被用于制作甘城なつき的周边商品",
+                    "甘城なつき会根据自己的日常生活创作Nachoneko的插画"
+                ],
+                "galleryLink": "emote-gallery.html?character=nachoneko"
+            },
+            "kana": {
+                "name": "Kana",
+                "japanese": "かな",
+                "image": "file:///F:/猫图/相关表情/kana/kana01.PNG",
+                "bio": "Kana是甘城なつき创作的一个可爱的猫娘角色，以其简洁的设计和可爱的表情而受到喜爱。Kana的设定是一只喜欢读书和学习的小猫，经常出现在教室或图书馆的场景中。她的表情以呆萌和可爱为主，非常适合用于表达各种日常情绪。",
+                "design": [
+                    "粉色的猫耳和猫尾，带有白色的斑点",
+                    "粉色的短发，带有白色的挑染",
+                    "大大的眼睛，通常为粉色或紫色",
+                    "经常穿着校服或休闲装",
+                    "喜欢背着书包或拿着书本"
+                ],
+                "personality": [
+                    "勤奋好学，喜欢读书和学习",
+                    "有点害羞，不太擅长与人交流",
+                    "非常聪明，成绩很好",
+                    "对知识充满渴望，总是在学习新东西",
+                    "虽然看起来文静，但实际上很活泼"
+                ],
+                "trivia": [
+                    "Kana的名字来源于日语\"かな\"，是一个常见的女性名字",
+                    "甘城なつき为Kana创作的表情包以\"学习\"和\"日常\"为主要主题",
+                    "Kana的形象经常出现在甘城なつき的校园主题插画中",
+                    "Kana的配色以粉色和白色为主，给人一种可爱的感觉",
+                    "Kana的表情包非常适合学生群体使用"
+                ],
+                "galleryLink": "emote-gallery.html?character=kana"
+            },
+            "riru": {
+                "name": "Riru",
+                "japanese": "りる",
+                "image": "file:///F:/猫图/相关表情/りる/りる01.png",
+                "bio": "Riru是甘城なつき设计的原创角色，以神秘优雅的哥特风格著称。她是甘城なつき作品中气质较为成熟的角色之一，展现了作者多样化的角色设计能力。Riru经常出现在奇幻和神秘主题的插画中，深受粉丝喜爱。",
+                "design": [
+                    "黑色长发搭配红色蝴蝶结",
+                    "锐利的红色眼睛，带有神秘的光芒",
+                    "常常穿着哥特风格的服装",
+                    "配饰精致，如项链、手套等",
+                    "整体造型优雅神秘"
+                ],
+                "personality": [
+                    "神秘高冷，不太擅长表达感情",
+                    "气质优雅，举止得体",
+                    "内心善良，默默关心他人",
+                    "喜欢独处，但关键时刻会挺身而出",
+                    "拥有独特的艺术品味"
+                ],
+                "trivia": [
+                    "Riru的名字来源于日语\"りる\"，是一个独特的名字",
+                    "甘城なつき为Riru创作的插画多以哥特和奇幻为主题",
+                    "Riru的形象展现了甘城なつき多样化的绘画风格",
+                    "Riru的周边商品以神秘风格为主",
+                    "Riru在粉丝中拥有独特的人气"
+                ],
+                "galleryLink": "emote-gallery.html?character=riru"
+            },
+            "sui": {
+                "name": "Sui",
+                "japanese": "スイ",
+                "image": "file:///F:/猫图/相关表情/スイ（sui）/スイ01.png",
+                "bio": "Sui是甘城なつき创作的原创角色，以精灵般的清新形象著称。她的设计灵感来自自然元素，给人一种清新脱俗的感觉。Sui经常出现在森林和自然场景的插画中，是甘城なつき作品中较为独特的角色之一。",
+                "design": [
+                    "浅绿色短发搭配绿色眼睛",
+                    "头上有类似叶子的装饰",
+                    "整体造型清新自然",
+                    "服装风格简约清新",
+                    "仿佛森林中的精灵"
+                ],
+                "personality": [
+                    "清新自然，热爱大自然",
+                    "性格温柔，善解人意",
+                    "有点害羞，不太擅长与人交流",
+                    "喜欢小动物，与自然和谐相处",
+                    "拥有治愈人心的力量"
+                ],
+                "trivia": [
+                    "Sui的名字来源于日语\"スイ\"，意为水，象征她像水一样清澈",
+                    "甘城なつき为Sui创作的插画多以自然为主题",
+                    "Sui的形象展现了甘城なつき对自然美的独特诠释",
+                    "Sui的配色以绿色和白色为主，清新自然",
+                    "Sui的表情包以治愈和清新为主要特点"
+                ],
+                "galleryLink": "emote-gallery.html?character=sui"
+            },
+            "naname": {
+                "name": "Naname",
+                "japanese": "ななめ",
+                "image": "file:///F:/猫图/相关表情/naname/naname1.jpg",
+                "bio": "Naname是甘城なつき创作的原创角色，以温柔可爱的形象著称。她的插画多以生活场景为主，展现了甘城なつき对日常温馨氛围的出色描绘能力。Naname的表情丰富多变，常以可爱的姿态出现在插画中，深受粉丝喜爱。",
+                "design": [
+                    "长发造型，发色多样",
+                    "服装风格偏于日常和温柔",
+                    "表情丰富多变",
+                    "常以可爱的姿态出现",
+                    "整体造型亲切自然"
+                ],
+                "personality": [
+                    "温柔善良，善解人意",
+                    "性格开朗，喜欢与人交流",
+                    "有点天然呆，经常做出可爱的举动",
+                    "热爱生活，享受每一天",
+                    "对他人非常关心"
+                ],
+                "trivia": [
+                    "Naname的名字来源于日语\"ななめ\"，意为倾斜，象征她活泼多变的性格",
+                    "甘城なつき为Naname创作的插画多以日常生活为主题",
+                    "Naname的形象展现了甘城なつき对温馨日常的出色描绘能力",
+                    "Naname的表情非常丰富，适合各种场景使用",
+                    "Naname在粉丝中拥有很高的人气"
+                ],
+                "galleryLink": "emote-gallery.html?character=naname"
+            }
+        };
+
+        function openCharacterModal(characterId) {
+            const character = characterDetails[characterId];
+            if (!character) return;
+
+            document.getElementById('character-detail-img').src = character.image;
+            document.getElementById('character-detail-title').textContent = character.name;
+            document.getElementById('character-detail-subtitle').textContent = character.japanese;
+            document.getElementById('character-detail-bio').textContent = character.bio;
+
+            const designList = document.getElementById('character-detail-design');
+            designList.innerHTML = '';
+            character.design.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                designList.appendChild(li);
+            });
+
+            const personalityList = document.getElementById('character-detail-personality');
+            personalityList.innerHTML = '';
+            character.personality.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                personalityList.appendChild(li);
+            });
+
+            const triviaList = document.getElementById('character-detail-trivia');
+            triviaList.innerHTML = '';
+            character.trivia.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                triviaList.appendChild(li);
+            });
+
+            const galleryLink = document.getElementById('character-gallery-link');
+            galleryLink.href = character.galleryLink;
+            galleryLink.textContent = `查看${character.name}相关表情画廊`;
+
+            const modal = document.getElementById('character-modal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCharacterModal() {
+            const modal = document.getElementById('character-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function initCharacterCards() {
+            const cards = document.querySelectorAll('.character-card');
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const characterId = this.dataset.character;
+                    openCharacterModal(characterId);
+                });
+            });
+        }
+
+        document.getElementById('character-modal-close').addEventListener('click', closeCharacterModal);
+        initCharacterCards();
+    </script>
+</body>
+</html>
